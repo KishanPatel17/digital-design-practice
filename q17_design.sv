@@ -5,18 +5,17 @@ module clock_divider (
   input logic rst_n
 );
 
-  logic [3:0] cnt = 4'd0;
+  logic [5:0] cnt = 6'd0;
   
-  always @(posedge in_clk or negedge rst_n) begin
+  always @(posedge in_clk or negedge in_clk or negedge rst_n) begin
     if (!rst_n) begin
-      cnt <=4'd0;
+      cnt <=6'd0;
       out_clk <= 1'd0;
-    end else if (cnt == (divide_rate - 1'd1)) begin
+    end else if (cnt == divide_rate) begin
       out_clk <= ~out_clk;
-      cnt <= 4'd0;
+      cnt <= 6'd1;
     end else begin
       cnt <= cnt + 1'd1;
     end
   end
-
 endmodule
